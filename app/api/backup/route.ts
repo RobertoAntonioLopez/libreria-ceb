@@ -13,13 +13,14 @@ export async function GET(req: Request) {
     }
 
     const books = await sql`SELECT * FROM books ORDER BY title`;
-    const loans = await sql`SELECT * FROM loans ORDER BY created_at`;
+const loans = await sql`SELECT * FROM loans ORDER BY created_at`;
 
-    const backup = {
-      generated_at: new Date().toISOString(),
-      books: books.rows,
-      loans: loans.rows,
-    };
+const backup = {
+  generated_at: new Date().toISOString(),
+  books,
+  loans,
+};
+
 
     return new NextResponse(JSON.stringify(backup, null, 2), {
       headers: {
