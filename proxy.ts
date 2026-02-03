@@ -11,6 +11,7 @@ const PUBLIC_PATHS = new Set([
   "/favicon.ico",
   "/icon.png",
   "/ceb-logo.png",
+"/api/version",
 ]);
 
 /**
