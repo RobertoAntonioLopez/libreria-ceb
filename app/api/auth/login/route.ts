@@ -4,9 +4,13 @@ import { getJwtSecret, verifyCredentials } from "../../../../src/lib/auth";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const user = String(body?.user ?? "");
-    const pass = String(body?.pass ?? "");
+   
+const body = await req.json();
+
+// Acepta user/pass (actual) y username/password (estándar)
+const user = String(body?.user ?? body?.username ?? "").trim();
+const pass = String(body?.pass ?? body?.password ?? "").trim();
+
 
     const ok = await verifyCredentials(user, pass);
     if (!ok) {

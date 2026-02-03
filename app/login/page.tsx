@@ -55,7 +55,7 @@ export default function LoginPage() {
                 value={user}
                 onChange={(e) => setUser(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-slate-300"
-                placeholder="Ari2511"
+                placeholder="Usuario"
                 autoComplete="username"
               />
             </div>
