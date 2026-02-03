@@ -1,18 +1,28 @@
-import { Pool } from "pg";
+import { neon } from "@neondatabase/serverless";
 
-declare global {
-  // Evita crear múltiples pools en hot-reload (dev)
-  // eslint-disable-next-line no-var
-  var __pgPool: Pool | undefined;
+/**
+ * Neon serverless driver (compatible con Cloudflare Workers).
+ * DATABASE_URL debe venir de .dev.vars (preview) o env vars en Cloudflare (prod).
+ */
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL is missing");
 }
 
-const pool =
-  global.__pgPool ??
-  new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-  });
+export const sql = neon(databaseUrl);
 
-if (process.env.NODE_ENV !== "production") global.__pgPool = pool;
+/**
+ * Wrapper compatible con código existente tipo `db.query(text, params)`
+ * para no reescribir todos los endpoints ahora.
+ *
+ * Devuelve { rows, rowCount } similar a pg.
+ */
+const db = {
+  async query(text: string, params: any[] = []) {
+    const rows = await sql.query(text, params);
+    return { rows, rowCount: rows.length };
+  },
+};
 
-export default pool;
+export default db;
