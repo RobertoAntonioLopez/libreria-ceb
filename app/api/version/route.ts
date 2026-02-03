@@ -1,10 +1,6 @@
-
-1import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function GET() {
-  // OpenNext/Workers: usa algo simple para "versionar"
-  // CF_PAGES_COMMIT_SHA existe en Pages; en Workers puede no existir.
-  // Devolvemos algo estable y útil.
   const commit =
     process.env.CF_PAGES_COMMIT_SHA ||
     process.env.VERCEL_GIT_COMMIT_SHA ||
@@ -18,4 +14,3 @@ export async function GET() {
     ts: new Date().toISOString(),
   });
 }
-
