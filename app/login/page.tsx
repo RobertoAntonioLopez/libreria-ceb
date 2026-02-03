@@ -59,6 +59,7 @@ export default function LoginPage() {
                 autoComplete="username"
               />
             </div>
+		<p className="text-xs text-slate-500">DEPLOY_OK_2026_02_03</p>
 
             <div>
               <label className="mb-1 block text-xs font-medium text-slate-600">Contraseña</label>
